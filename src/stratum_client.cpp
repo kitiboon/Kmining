@@ -12,6 +12,10 @@ bool StratumClient::connect() {
     return is_connected_;
 }
 
+bool StratumClient::isConnected() const {
+    return is_connected_;
+}
+
 void StratumClient::startListening() {
     if (!is_connected_) {
         g_logger.error("Cannot start listening, not connected.");

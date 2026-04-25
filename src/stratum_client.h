@@ -7,6 +7,7 @@ class StratumClient {
 public:
     StratumClient(const std::string& host, int port);
     bool connect();
+    bool isConnected() const;
     void startListening();
     void receiveJobMock();
     void submitShareMock();
