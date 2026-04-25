@@ -8,7 +8,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # as nvcc is not available. We will compile .cu files as C++ for now
 # just to verify the structure and syntax.
 set_source_files_properties(src/kernel.cu PROPERTIES LANGUAGE CXX)
-set_source_files_properties(src/kernel.cu PROPERTIES COMPILE_FLAGS "-x c++")
+if(MSVC)
+    set_source_files_properties(src/kernel.cu PROPERTIES COMPILE_FLAGS "/TP")
+else()
+    set_source_files_properties(src/kernel.cu PROPERTIES COMPILE_FLAGS "-x c++")
+endif()
 
 add_executable(miner_engine
     src/main.cpp
