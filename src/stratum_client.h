@@ -8,6 +8,8 @@ public:
     StratumClient(const std::string& host, int port);
     bool connect();
     void startListening();
+    void receiveJobMock();
+    void submitShareMock();
 
 private:
     std::string host_;
