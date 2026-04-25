@@ -1,8 +1,9 @@
 #include "stratum_client.h"
 #include <iostream>
+#include <utility>
 
-StratumClient::StratumClient(const std::string& host, int port)
-    : host_(host), port_(port), is_connected_(false) {}
+StratumClient::StratumClient(std::string host, int port)
+    : host_(std::move(host)), port_(port), is_connected_(false) {}
 
 bool StratumClient::connect() {
     std::cout << "Attempting to connect to stratum pool at " << host_ << ":" << port_ << "..." << std::endl;
