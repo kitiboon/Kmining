@@ -3,7 +3,7 @@
 #include <iostream>
 
 void test_connect() {
-    StratumClient client("localhost", 4444);
+    StratumClient client("localhost", 4444, "BONK:Wallet.Worker", "x");
 
     // Initial state
     assert(!client.isConnected());

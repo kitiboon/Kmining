@@ -15,9 +15,14 @@ add_executable(miner_engine
     src/stratum_client.cpp
     src/kernel.cu
     src/logger.cpp
+    src/AlgoEtchash.cpp
+    src/AlgoKawPow.cpp
+    src/AutoSwitcher.cpp
+    src/WebServer.cpp
 )
 
 add_executable(run_tests
     tests/test_stratum_client.cpp
     src/stratum_client.cpp
+    src/logger.cpp
 )

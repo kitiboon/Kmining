@@ -5,7 +5,7 @@
 
 class StratumClient {
 public:
-    StratumClient(const std::string& host, int port);
+    StratumClient(std::string host, int port, std::string user = "", std::string pass = "");
     bool connect();
     bool isConnected() const;
     void startListening();
@@ -15,6 +15,8 @@ public:
 private:
     std::string host_;
     int port_;
+    std::string user_;
+    std::string pass_;
     bool is_connected_;
 };
 
