@@ -17,9 +17,3 @@ void test_connect() {
 
     std::cout << "test_connect passed!" << std::endl;
 }
-
-int main() {
-    test_connect();
-    std::cout << "All tests passed!" << std::endl;
-    return 0;
-}

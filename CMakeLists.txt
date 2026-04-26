@@ -22,7 +22,10 @@ add_executable(miner_engine
 )
 
 add_executable(run_tests
+    tests/test_main.cpp
     tests/test_stratum_client.cpp
+    tests/test_kernel.cpp
     src/stratum_client.cpp
+    src/kernel.cu
     src/logger.cpp
 )
