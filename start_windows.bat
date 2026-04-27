@@ -1,5 +1,4 @@
 @echo off
-chcp 65001 >nul
 setlocal EnableDelayedExpansion
 
 :MENU
@@ -7,13 +6,13 @@ cls
 echo ===============================================================================
 echo                           Kmining Windows Control Panel
 echo ===============================================================================
-echo 1. Build Kmining (สร้างตัวรัน)
-echo 2. Run Miner (เริ่มขุด)
-echo 3. Run Benchmark (ทดสอบประสิทธิภาพ)
-echo 4. Run Unit Tests (ทดสอบระบบ)
-echo 5. Exit (ออก)
+echo 1. Build Kmining
+echo 2. Run Miner
+echo 3. Run Benchmark
+echo 4. Run Unit Tests
+echo 5. Exit
 echo ===============================================================================
-set /p choice="กรุณาเลือกเมนู (1-5): "
+set /p choice="Please select an option (1-5): "
 
 if "%choice%"=="1" goto BUILD
 if "%choice%"=="2" goto RUN
@@ -21,51 +20,51 @@ if "%choice%"=="3" goto BENCHMARK
 if "%choice%"=="4" goto TEST
 if "%choice%"=="5" goto END
 
-echo ไม่พบเมนูที่เลือก กรุณาลองใหม่...
+echo Invalid choice. Please try again...
 timeout /t 2 >nul
 goto MENU
 
 :BUILD
 echo.
-echo กำลังตรวจสอบเครื่องมือที่จำเป็น...
+echo Checking for required tools...
 where cmake >nul 2>&1
 if %ERRORLEVEL% NEQ 0 (
-    echo [ERROR] ไม่พบ CMake กรุณาติดตั้ง CMake ก่อนดำเนินการต่อ
-    echo คุณสามารถติดตั้งผ่านคำสั่ง: winget install cmake
+    echo [ERROR] CMake not found. Please install CMake before continuing.
+    echo You can install it via: winget install cmake
     pause
     goto MENU
 )
 
-echo 🚀 กำลังตั้งค่าและคอมไพล์ Kmining...
+echo Setting up and compiling Kmining...
 if not exist "build" mkdir build
 cd build
 cmake ..
 if %ERRORLEVEL% NEQ 0 (
-    echo [ERROR] การตั้งค่า CMake ล้มเหลว
+    echo [ERROR] CMake configuration failed.
     cd ..
     pause
     goto MENU
 )
 cmake --build . --config Release
 if %ERRORLEVEL% NEQ 0 (
-    echo [ERROR] การคอมไพล์ล้มเหลว
+    echo [ERROR] Compilation failed.
     cd ..
     pause
     goto MENU
 )
 cd ..
-echo ✅ สร้าง Kmining สำเร็จ!
+echo Kmining built successfully!
 pause
 goto MENU
 
 :RUN
 echo.
 if not exist "build\Release\miner_engine.exe" (
-    echo [ERROR] ไม่พบไฟล์ miner_engine.exe กรุณา Build ก่อน!
+    echo [ERROR] miner_engine.exe not found. Please build first!
     pause
     goto MENU
 )
-echo เริ่มต้นขุด...
+echo Starting miner...
 .\build\Release\miner_engine.exe
 pause
 goto MENU
@@ -73,11 +72,11 @@ goto MENU
 :BENCHMARK
 echo.
 if not exist "build\Release\miner_engine.exe" (
-    echo [ERROR] ไม่พบไฟล์ miner_engine.exe กรุณา Build ก่อน!
+    echo [ERROR] miner_engine.exe not found. Please build first!
     pause
     goto MENU
 )
-echo เริ่มต้นทดสอบประสิทธิภาพ...
+echo Starting benchmark...
 .\build\Release\miner_engine.exe --benchmark
 pause
 goto MENU
@@ -85,7 +84,7 @@ goto MENU
 :TEST
 echo.
 if not exist "build\Release\run_tests.exe" (
-    echo [ERROR] ไม่พบไฟล์ทดสอบระบบ (run_tests.exe) กำลังพยายามสร้าง...
+    echo [WARNING] run_tests.exe not found. Attempting to build...
     if not exist "build" mkdir build
     cd build
     cmake ..
@@ -94,12 +93,12 @@ if not exist "build\Release\run_tests.exe" (
 )
 
 if not exist "build\Release\run_tests.exe" (
-    echo [ERROR] สร้างไฟล์ทดสอบไม่สำเร็จ กรุณาตรวจสอบโค้ด
+    echo [ERROR] Failed to build tests.
     pause
     goto MENU
 )
 
-echo เริ่มรันระบบทดสอบ...
+echo Running test suite...
 .\build\Release\run_tests.exe
 pause
 goto MENU
