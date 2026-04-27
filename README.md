@@ -2,7 +2,25 @@
 
 Kmining คือ Custom Cryptocurrency Miner Engine ที่เขียนด้วยภาษา C++ และ CUDA สำหรับ NVIDIA CMP 30HX GPU (Turing architecture) โดยเฉพาะ ตัวโปรแกรมรองรับ Multi-Algorithm, ระบบสลับการขุดอัตโนมัติตามความคุ้มค่า (Profitability Auto-Switching) และ Local Web Dashboard
 
-## วิธีการใช้งานเบื้องต้น (How to Use)
+## เริ่มต้นใช้งานด่วน (Quick Start) - พร้อมใช้งานทันที
+
+โปรเจกต์นี้มาพร้อมกับสคริปต์ที่รวบรวมขั้นตอนการ Build และ Run ไว้ด้วยกัน คุณสามารถใช้คำสั่งเดียวเพื่อเริ่มรัน Miner ได้ทันที:
+
+**สำหรับ Linux:**
+```bash
+./start_linux.sh
+```
+
+**สำหรับ Windows:**
+```powershell
+.\start_windows.bat
+```
+
+*สคริปต์นี้รองรับการใส่ Flags เพิ่มเติม เช่น `./start_linux.sh --benchmark` หรือ `.\start_windows.bat --host us1.ethermine.org`*
+
+---
+
+## วิธีการใช้งานแบบ Manual (Manual Usage)
 
 ### การคอมไพล์ (Build Instructions)
 โปรแกรมนี้ใช้ CMake เป็น Build System และต้องการ C++17
