@@ -1,17 +1,36 @@
 # Kmining
 
-A custom cryptocurrency miner engine for NVIDIA GPUs (optimized for CMP 30HX / Turing architecture).
+เอนจินขุดเหรียญคริปโตแบบคัสตอมสำหรับ NVIDIA GPUs (ปรับแต่งเพื่อ CMP 30HX / สถาปัตยกรรม Turing)
 
-## Prerequisites
+## 📌 สิ่งที่ต้องเตรียม (Prerequisites)
 
-- **CMake** (3.10 or higher)
+- **CMake** (เวอร์ชัน 3.10 ขึ้นไป)
 - **C++ Compiler**:
-  - Linux: GCC or Clang (C++17 support required)
-  - Windows: Visual Studio 2019 or 2022 (with "Desktop development with C++" workload)
+  - Linux: GCC หรือ Clang (ต้องรองรับ C++17)
+  - Windows: Visual Studio 2019 หรือ 2022 (พร้อมติดตั้ง "Desktop development with C++")
 
-## 🛠 Building the Project
+## 🛠 การติดตั้งและใช้งาน (Windows 11)
 
-### Linux / macOS
+วิธีที่ง่ายที่สุดในการติดตั้งและใช้งานบน Windows คือการใช้สคริปต์เมนูที่เราเตรียมไว้ให้:
+
+1. ดับเบิลคลิกไฟล์ `start_windows.bat` หรือรันผ่าน PowerShell/Command Prompt:
+   ```powershell
+   .\start_windows.bat
+   ```
+2. หน้าจอเมนูจะแสดงขึ้นมา ให้พิมพ์ตัวเลขเพื่อเลือกคำสั่ง:
+   - **1. Build Kmining**: ใช้สำหรับคอมไพล์โปรแกรม (ทำครั้งแรก หรือเมื่อมีการแก้โค้ด)
+   - **2. Run Miner**: เริ่มการขุด
+   - **3. Run Benchmark**: ทดสอบประสิทธิภาพแฮชเรต
+   - **4. Run Unit Tests**: รันระบบทดสอบเพื่อตรวจสอบความสมบูรณ์
+   - **5. Exit**: ออกจากโปรแกรม
+
+*(หมายเหตุ: หากคุณยังไม่ได้ติดตั้ง CMake สคริปต์จะแจ้งเตือนและแนะนำให้ติดตั้งผ่านคำสั่ง `winget install cmake`)*
+
+---
+
+## 🛠 การติดตั้งและใช้งาน (Linux / macOS)
+
+### 1. การคอมไพล์ (Build)
 
 ```bash
 mkdir -p build
@@ -20,42 +39,26 @@ cmake ..
 make
 ```
 
-### Windows 11 (PowerShell / Command Prompt)
+### 2. การรันโปรแกรม (Usage)
 
-```powershell
-mkdir build
-cd build
-cmake ..
-cmake --build . --config Release
-```
+โปรแกรมขุดจะพยายามเชื่อมต่อไปยังพูลเริ่มต้น (`us1.ethermine.org:4444`) และเริ่มกระบวนการแฮช
 
-## 🚀 How to Run (Usage)
-
-### 1. Running the Miner
-The miner will attempt to connect to the default pool (`us1.ethermine.org:4444`) and start the hashing process.
-
-**Linux:**
 ```bash
 ./build/miner_engine
 ```
 
-**Windows:**
-```powershell
-.\build\Release\miner_engine.exe
-```
+### 3. ผลลัพธ์ที่คาดหวัง
+เมื่อรันโปรแกรมขุด คุณจะเห็น:
+- การจำลองอุปกรณ์ CUDA (จำลองสำหรับ CMP 30HX)
+- ความพยายามในการเชื่อมต่อไปยัง stratum pool
+- ข้อความแจ้งการเชื่อมต่อสำเร็จ
+- การรันเคอร์เนลขุดพร้อมค่าแฮชเรตจำลอง (~30 MH/s)
 
-### 2. Expected Output
-When you run the miner, you should see:
-- CUDA device initialization (mocked for CMP 30HX).
-- Connection attempt to the stratum pool.
-- Successful connection message.
-- Mining kernel execution with mock hashrate (~30 MH/s).
+## 🧪 การทดสอบ (Testing)
 
-## 🧪 How to Test
+เรามีระบบ Unit tests เพื่อให้มั่นใจว่าตรรกะการเชื่อมต่อมีความเสถียร
 
-We have implemented unit tests to ensure the stability of the connection logic.
-
-### 1. Running the Automated Tests
+### การรันระบบทดสอบอัตโนมัติ
 
 **Linux:**
 ```bash
@@ -64,22 +67,8 @@ make run_tests
 ./run_tests
 ```
 
-**Windows:**
-```powershell
-cd build
-cmake --build . --target run_tests --config Release
-.\Release\run_tests.exe
-```
-
-### 2. What is being tested?
-The `run_tests` executable verifies:
-- `isConnected()` returns `false` before connection.
-- `connect()` returns `true` upon successful handshake.
-- `isConnected()` returns `true` after connection.
-
-### 3. Manual Verification (Optional)
-To verify the tests catch real bugs:
-1. Open `src/stratum_client.cpp`.
-2. Change `is_connected_ = true;` to `is_connected_ = false;` in the `connect()` method.
-3. Re-build and run the tests.
-4. You should see an **Assertion Failure**, proving the test is working correctly.
+### ระบบตรวจสอบอะไรบ้าง?
+ไฟล์รันคำสั่ง `run_tests` จะตรวจสอบ:
+- `isConnected()` จะต้องคืนค่า `false` ก่อนที่จะมีการเชื่อมต่อ
+- `connect()` จะต้องคืนค่า `true` เมื่อทำการ handshake สำเร็จ
+- `isConnected()` จะต้องคืนค่า `true` หลังจากที่เชื่อมต่อแล้ว
