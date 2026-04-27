@@ -11,6 +11,7 @@ struct MiningConfig {
     int unrollFactor;
 };
 
+void runMiningKernelMock();
 void runMiningKernelMock(const MiningConfig& config);
 void runBenchmarkMode(int durationSeconds);
 

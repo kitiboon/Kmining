@@ -16,6 +16,11 @@ void initCudaDevice() {
     g_logger.info("Applying memory coalescing and loop unrolling optimizations...");
 }
 
+void runMiningKernelMock() {
+    std::cout << "Running mining kernel on GPU (mock)..." << std::endl;
+    std::cout << "Hashing... (mock hashrate ~30 MH/s)" << std::endl;
+}
+
 void runMiningKernelMock(const MiningConfig& config) {
     g_logger.debug("Running mining kernel on GPU (mock) with Grid: " + std::to_string(config.gridSize) +
                    ", Block: " + std::to_string(config.blockSize) +
